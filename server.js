@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-
+import logger from "./logger.cjs";
 
 const app = express();
 
@@ -21,12 +21,13 @@ app.use(cors());
 
 app.get("/user", (req, res) => {
     let template;
-    if (req.query & req.query.length != 0) {
-        console.log(req.query);
+    logger.info(JSON.stringify(req.query));
+    if (req.query && Object.keys(req.query).length != 0) {
         template = `<html><h1>${JSON.stringify(req.query)}</h1></html>`
     }
     else {
-        template = `<html><h1>User not found!</h1></html>`
+        logger.info('User not found!');
+        template = `<html><h1>User not found!</h1></html>`;
     }
     res.status(200).send(template)
 })
@@ -34,7 +35,10 @@ app.get("/user", (req, res) => {
 app.get("/", (req, res) => {
     if (req) {
         if (req.query) {
-            console.log(req.query);
+            logger.info(JSON.stringify(req.query));
+            logger.debug(JSON.stringify(req.query));
+            logger.warn(JSON.stringify(req.query));
+            logger.error(JSON.stringify(req.query));
             res.status(200).json({
                 message: req.query,
                 statusCode: 200
