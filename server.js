@@ -35,10 +35,7 @@ app.get("/user", (req, res) => {
 app.get("/", (req, res) => {
     if (req) {
         if (req.query) {
-            logger.info(JSON.stringify(req.query));
             logger.debug(JSON.stringify(req.query));
-            logger.warn(JSON.stringify(req.query));
-            logger.error(JSON.stringify(req.query));
             res.status(200).json({
                 message: req.query,
                 statusCode: 200
